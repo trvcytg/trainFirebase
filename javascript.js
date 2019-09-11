@@ -116,9 +116,6 @@ setInterval(function() {
       $(`.trainPull`).empty();
       database.ref().on("child_added", function(snapshot, prevChildKey) {
         var newPost = snapshot.val();
-        console.log("***From Initial Pull***");
-        console.log(`Train Name: ${newPost.name} to ${newPost.destination}`);
-        console.log(" ");
         //Convert firstTrain to guarenteed past date
         let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
           1,

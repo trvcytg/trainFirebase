@@ -20,7 +20,7 @@ body {
 }
 .card-header {
   background: #0e7373;
-  padding: 1% 2% 1% 2%;
+  padding: 1% 12px 1% 12px;
   border-bottom: 0;
 }
 .form-control {

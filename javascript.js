@@ -110,15 +110,3 @@ $(`#submitButton`).click(function(event) {
     $(`.trainPull`).prepend(newDiv);
   });
 });
-
-//Not yet used
-function writeTrainSchedule(trainName, destination, firstTrain, frequency) {
-  firebase
-    .database()
-    .ref("/" + trainName)
-    .set({
-      destination: destination,
-      firstTrain: firstTrain,
-      frequency: frequency
-    });
-}

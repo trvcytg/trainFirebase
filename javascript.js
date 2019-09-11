@@ -10,10 +10,6 @@ const config = {
 firebase.initializeApp(config);
 const database = firebase.database();
 
-// Pull Current Time on Page Loading
-let currentTime = moment().format();
-console.log("Time of Page Access: " + moment(currentTime).format("hh:mm"));
-
 //Check for information to push to table on Firebase upon page load
 database.ref().once("value", function(snapshot) {
   if (snapshot.exists()) {
@@ -28,67 +24,51 @@ database.ref().once("value", function(snapshot) {
       console.log("Previous Post ID: " + prevChildKey);
       console.log(`-- - -- --- -- - --`);
 
-      // First Time (pushed back 1 year to make sure it comes before current time)
+      //Convert firstTrain to guarenteed past date
       let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
         1,
         "years"
       );
-      console.log(firstTrainConverted);
-
-      // Current Time
-      let currentTime = moment();
-      console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-      // Difference between the times
-      let diffTime = moment().diff(moment(firstTrainConverted), "minutes");
-      console.log("DIFFERENCE IN TIME: " + diffTime);
-
-      // Time apart (remainder)
-      let tRemainder = diffTime % newPost.frequency;
-      console.log(tRemainder);
-
-      // Minute Until Train
-      let tMinutesTillTrain = newPost.frequency - tRemainder;
-      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-      // Next Train
-      let nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      // Difference between firstTrain and now
+      let timeDifference = moment().diff(
+        moment(firstTrainConverted),
+        "minutes"
+      );
+      // Finds the Remainder time between last arrival and now
+      let timeRemainder = timeDifference % newPost.frequency;
+      // Minute Until Train by subtracting remainder found above from the frequency in minutes
+      let minutesUntilNextTrain = newPost.frequency - timeRemainder;
+      // Time next train is scheduled to arrive
+      let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
+      // Converts Time to 'xx:xx xm' format
       let nextTrainConverted = moment(nextTrain).format("hh:mm a");
 
       newDiv = $(`<tr><th scope="row" class="nameData">${newPost.name}</th>
         <td scope="row" class="trainDestination">${newPost.destination}</td>
         <td class="trainFrequency">${newPost.frequency}</td>
         <td class="nextTrain">${nextTrainConverted}</td>
-        <td class="minAway">${tMinutesTillTrain}</td></tr>`);
+        <td class="minAway">${minutesUntilNextTrain}</td></tr>`);
       $(`.trainPull`).prepend(newDiv);
     });
   }
 });
 
+// Adds user input to Firebase application and pulls all stored information into the proper
+// receptacle -- ".trainPull" on clicking submit button
 $(`#submitButton`).click(function(event) {
   event.preventDefault();
-  let currentTime = moment().format("HH:mm");
-  console.log("Train added at: " + currentTime);
   const trainName = $(`#trainName`)
     .val()
     .trim();
-  console.log(trainName);
-
   const destination = $(`#destination`)
     .val()
     .trim();
-  console.log(destination);
-
   const firstTrain = $(`#firstTrain`)
     .val()
     .trim();
-  console.log(firstTrain);
-
   const trainFrequency = $(`#frequency`)
     .val()
     .trim();
-  console.log(trainFrequency);
-
   database.ref().push({
     name: trainName,
     destination: destination,
@@ -104,40 +84,29 @@ $(`#submitButton`).click(function(event) {
     console.log("First Train: " + newPost.firstTrain);
     console.log("Frequency in minutes: " + newPost.frequency);
     console.log("Previous Post ID: " + prevChildKey);
-    console.log(`-- - -- --- -- - --`);
+    console.log(`-- - -- -Line-Break- -- - --`);
 
-    // First Time (pushed back 1 year to make sure it comes before current time)
+    //Convert firstTrain to guarenteed past date
     let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
       1,
       "years"
     );
-    console.log(firstTrainConverted);
-
-    // Current Time
-    let currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    // Difference between the times
-    let diffTime = moment().diff(moment(firstTrainConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
-
-    // Time apart (remainder)
-    let tRemainder = diffTime % newPost.frequency;
-    console.log(tRemainder);
-
-    // Minute Until Train
-    let tMinutesTillTrain = newPost.frequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // Next Train
-    let nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    // Difference between firstTrain and now
+    let timeDifference = moment().diff(moment(firstTrainConverted), "minutes");
+    // Finds the Remainder time between last arrival and now
+    let timeRemainder = timeDifference % newPost.frequency;
+    // Minute Until Train by subtracting remainder found above from the frequency in minutes
+    let minutesUntilNextTrain = newPost.frequency - timeRemainder;
+    // Time next train is scheduled to arrive
+    let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
+    // Converts Time to 'xx:xx xm' format
     let nextTrainConverted = moment(nextTrain).format("hh:mm a");
 
     newDiv = $(`<tr><th scope="row" class="nameData">${newPost.name}</th>
-        <td scope="row" class="trainDestination">${newPost.destination}</td>
-        <td class="trainFrequency">${newPost.frequency}</td>
-        <td class="nextTrain">${nextTrainConverted}</td>
-        <td class="minAway">${tMinutesTillTrain}</td></tr>`);
+      <td scope="row" class="trainDestination">${newPost.destination}</td>
+      <td class="trainFrequency">${newPost.frequency}</td>
+      <td class="nextTrain">${nextTrainConverted}</td>
+      <td class="minAway">${minutesUntilNextTrain}</td></tr>`);
     $(`.trainPull`).prepend(newDiv);
   });
 });
@@ -153,22 +122,3 @@ function writeTrainSchedule(trainName, destination, firstTrain, frequency) {
       frequency: frequency
     });
 }
-
-// database.ref().once("value", function(snapshot) {
-//   var newPost = snapshot.val();
-//   // Difference between the times
-//   let timeDiff = moment().diff(moment(newPost.firstTrain), "minutes");
-//   console.log("Difference in Time: " + timeDiff);
-
-//   // Time apart (remainder)
-//   let tRemainder = timeDiff % newPost.frequency;
-//   console.log(tRemainder);
-
-//   // Minute Until Train
-//   let minTilTrain = newPost.frequency - tRemainder;
-//   console.log("Minutes until Next Train: " + minTilTrain);
-
-//   // Next Train
-//   let nextTrain = moment().add(minTilTrain, "minutes");
-//   console.log("Next Train: " + moment(nextTrain).format("hh:mm"));
-// });

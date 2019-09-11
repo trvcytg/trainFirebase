@@ -8,7 +8,7 @@
   padding-left: 0;
 }
 .btn {
-  margin: 0 2% 0.5% 2%;
+  margin: 0 12px 0.5% 12px;
 }
 body {
   background: #3c4144;
@@ -31,6 +31,11 @@ body {
   color: #c1d0d9;
   background-color: #0e6973;
   border-color: #0e7373;
+}
+.btn-primary:hover {
+  color: #c1d0d9;
+  background-color: #3c4144;
+  border-color: #c1d0d9;
 }
 /* From: color.adobe.com/trends */
 /* Color Theme Swatches in Hex */

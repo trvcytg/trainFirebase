@@ -52,23 +52,25 @@
             Add Train
         </div>
         <form>
-                <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6"><div class="form-group">
                   <label for="trainName">Train Name:</label>
                   <input type="text" class="form-control" id="trainName" placeholder="Train Name">
-                </div>
-                <div class="form-group">
+                </div></div>
+                <div class="col-md-6"><div class="form-group">
                   <label for="destination">Destination:</label>
                   <input type="text" class="form-control" id="destination" placeholder="Destination">
-                </div>
-                <div class="form-group">
+                </div></div></div>
+                <div class="row">
+                    <div class="col-md-6"><div class="form-group">
                   <label for="firstTrain">First Train Time: (HH:mm)</label>
                   <input type="time" class="form-control" id="firstTrain" placeholder="Time of the First Train"
                   min="00:00" max="23:59" required>
-                </div>
-                <div class="form-group">
+                </div></div>
+                <div class="col-md-6"><div class="form-group">
                   <label for="frequency">Frequency in Minutes:</label>
                   <input type="number" class="form-control" id="frequency" placeholder="Frequency of Train" min="0">
-                </div>
+                </div></div></div>
               </form>
           <a href="#" class="btn btn-primary" id="submitButton">Go somewhere</a>
         </div>

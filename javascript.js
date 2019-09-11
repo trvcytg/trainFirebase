@@ -11,8 +11,8 @@ firebase.initializeApp(config);
 const database = firebase.database();
 
 // Pull Current Time on Page Loading
-let currentTime = moment();
-console.log("Time of Page Access " + moment(currentTime).format("hh:mm"));
+let currentTime = moment().format();
+console.log("Time of Page Access: " + moment(currentTime).format("hh:mm"));
 
 //Check for information to push to table on Firebase upon page load
 database.ref().once("value", function(snapshot) {
@@ -40,6 +40,8 @@ database.ref().once("value", function(snapshot) {
 
 $(`#submitButton`).click(function(event) {
   event.preventDefault();
+  let currentTime = moment().format("HH:mm");
+  console.log("Train added at: " + currentTime);
   const trainName = $(`#trainName`)
     .val()
     .trim();

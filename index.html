@@ -62,11 +62,12 @@
                 </div>
                 <div class="form-group">
                   <label for="firstTrain">First Train Time: (HH:mm)</label>
-                  <input type="text" class="form-control" id="firstTrain" placeholder="Time of the First Train">
+                  <input type="time" class="form-control" id="firstTrain" placeholder="Time of the First Train"
+                  min="00:00" max="23:59" required>
                 </div>
                 <div class="form-group">
                   <label for="frequency">Frequency in Minutes:</label>
-                  <input type="text" class="form-control" id="frequency" placeholder="Frequency of Train">
+                  <input type="number" class="form-control" id="frequency" placeholder="Frequency of Train" min="0">
                 </div>
               </form>
           <a href="#" class="btn btn-primary" id="submitButton">Go somewhere</a>

@@ -7,4 +7,7 @@ const config = {
   storageBucket: "projectevergreen-e6084.appspot.com"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(config);
+const database = firebase.database();
+
+$(`#submitButton`).click(function(event) {

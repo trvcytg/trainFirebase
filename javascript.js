@@ -16,14 +16,9 @@ database.ref().once("value", function(snapshot) {
     $(`.trainPull`).empty();
     database.ref().on("child_added", function(snapshot, prevChildKey) {
       var newPost = snapshot.val();
-      console.log("***Initial Data Pulled from Firebase***");
-      console.log("Train Name: " + newPost.name);
-      console.log("Destination: " + newPost.destination);
-      console.log("First Train: " + newPost.firstTrain);
-      console.log("Frequency in minutes: " + newPost.frequency);
-      console.log("Previous Post ID: " + prevChildKey);
-      console.log(`-- - -- --- -- - --`);
-
+      console.log("***From Initial Pull***");
+      console.log(`Train Name: ${newPost.name} to ${newPost.destination}`);
+      console.log(" ");
       //Convert firstTrain to guarenteed past date
       let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
         1,
@@ -79,13 +74,8 @@ $(`#submitButton`).click(function(event) {
   $(`.trainPull`).empty();
   database.ref().on("child_added", function(snapshot, prevChildKey) {
     var newPost = snapshot.val();
-    console.log("Train Name: " + newPost.name);
-    console.log("Destination: " + newPost.destination);
-    console.log("First Train: " + newPost.firstTrain);
-    console.log("Frequency in minutes: " + newPost.frequency);
-    console.log("Previous Post ID: " + prevChildKey);
-    console.log(`-- - -- -Line-Break- -- - --`);
-
+    console.log(`Train Name: ${newPost.name} to ${newPost.destination}`);
+    console.log(" ");
     //Convert firstTrain to guarenteed past date
     let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
       1,
@@ -101,7 +91,7 @@ $(`#submitButton`).click(function(event) {
     let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
     // Converts Time to 'xx:xx xm' format
     let nextTrainConverted = moment(nextTrain).format("hh:mm a");
-
+    // ***Messy code that does exactly what I want***
     newDiv = $(`<tr><th scope="row" class="nameData">${newPost.name}</th>
       <td scope="row" class="trainDestination">${newPost.destination}</td>
       <td class="trainFrequency">${newPost.frequency}</td>

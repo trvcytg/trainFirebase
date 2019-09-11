@@ -12,19 +12,23 @@
     />
     <!-- style.css link -->
     <link rel="stylesheet" href="style.css" />
-
+<!-- Page Title -->
     <title>Train Scheduler</title>
   </head>
   <body>
+    <!-- Bootstrap container for document -->
     <div class="container">
+      <!-- Add Bootstrap Jumbotron element -->
       <div class="jumbotron text-center">
         <h1>Anytime is train time.</h1>
         <h2>Chugga chugga, choo choo.</h2>
       </div>
+      <!-- Add first Bootstrap Card element -->
       <div class="card">
         <div class="card-header">
                 Current Train Schedule
         </div>
+        <!-- Add table to place Train information from Firebase within first Card -->
         <table class="table">
           <thead>
             <tr>
@@ -47,27 +51,38 @@
         </table>
       </div>
       <br />
+      <!-- Add second Bootstrap Card element -->
       <div class="card">
         <div class="card-header">
             Add Train
         </div>
+        <!-- Add form for various information input -->
         <form>
+                <!-- Row for first two input elements -->
                 <div class="row">
-                  <div class="col-md-6 leftCol"><div class="form-group">
+                  <div class="col-md-6 leftCol">
+                    <!-- Input for train name -->
+                    <div class="form-group">
                   <label for="trainName">Train Name:</label>
                   <input type="text" class="form-control" id="trainName" placeholder="Train Name">
                 </div></div>
-                <div class="col-md-6 rightCol"><div class="form-group">
+                <div class="col-md-6 rightCol">
+                  <!-- Input for Destination -->
+                  <div class="form-group">
                   <label for="destination">Destination:</label>
                   <input type="text" class="form-control" id="destination" placeholder="Destination">
                 </div></div></div>
                 <div class="row">
-                    <div class="col-md-6 leftCol"><div class="form-group">
+                    <div class="col-md-6 leftCol">
+                      <!-- Input for Time of the first train; only accepts times! -->
+                      <div class="form-group">
                   <label for="firstTrain">First Train Time: (HH:mm)</label>
                   <input type="time" class="form-control" id="firstTrain" placeholder="Time of the First Train"
                   min="00:00" max="23:59" required>
                 </div></div>
-                <div class="col-md-6 rightCol"><div class="form-group">
+                <div class="col-md-6 rightCol">
+                  <!-- Input for frequency of train in minutes; only accepts numbers greater than 0! -->
+                  <div class="form-group">
                   <label for="frequency">Frequency in Minutes:</label>
                   <input type="number" class="form-control" id="frequency" placeholder="Frequency of Train" min="0">
                 </div></div></div>

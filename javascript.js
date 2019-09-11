@@ -37,7 +37,7 @@ database.ref().once("value", function(snapshot) {
       let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
       // Converts Time to 'xx:xx xm' format
       let nextTrainConverted = moment(nextTrain).format("hh:mm a");
-
+      //  Create html elements to add information to table
       newDiv = $(`
         <tr>
           <th scope="row" class="nameData">${newPost.name}</th>
@@ -75,7 +75,9 @@ $(`#submitButton`).click(function(event) {
     frequency: trainFrequency,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
+  // Empty table element
   $(`.trainPull`).empty();
+  // Pull information from FireBase
   database.ref().on("child_added", function(snapshot, prevChildKey) {
     var newPost = snapshot.val();
     console.log(`Train Name: ${newPost.name} to ${newPost.destination}`);
@@ -95,7 +97,7 @@ $(`#submitButton`).click(function(event) {
     let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
     // Converts Time to 'xx:xx xm' format
     let nextTrainConverted = moment(nextTrain).format("hh:mm a");
-    // ***Messy code that does exactly what I want***
+    //  Create html elements to add information to table
     newDiv = $(`
     <tr>
       <th scope="row" class="nameData">${newPost.name}</th>
@@ -134,7 +136,7 @@ setInterval(function() {
         let nextTrain = moment().add(minutesUntilNextTrain, "minutes");
         // Converts Time to 'xx:xx xm' format
         let nextTrainConverted = moment(nextTrain).format("hh:mm a");
-
+        //  Create html elements to add information to table
         newDiv = $(`
         <tr>
           <th scope="row" class="nameData">${newPost.name}</th>

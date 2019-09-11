@@ -1,6 +1,12 @@
 .form-group {
   padding: 0 2% 0 2%;
 }
+.leftCol {
+  padding-right: 0;
+}
+.rightCol {
+  padding-left: 0;
+}
 .btn {
   margin: 0 2% 0.5% 2%;
 }

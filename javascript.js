@@ -28,11 +28,38 @@ database.ref().once("value", function(snapshot) {
       console.log("Previous Post ID: " + prevChildKey);
       console.log(`-- - -- --- -- - --`);
 
+      // First Time (pushed back 1 year to make sure it comes before current time)
+      let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
+        1,
+        "years"
+      );
+      console.log(firstTrainConverted);
+
+      // Current Time
+      let currentTime = moment();
+      console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+      // Difference between the times
+      let diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+      console.log("DIFFERENCE IN TIME: " + diffTime);
+
+      // Time apart (remainder)
+      let tRemainder = diffTime % newPost.frequency;
+      console.log(tRemainder);
+
+      // Minute Until Train
+      let tMinutesTillTrain = newPost.frequency - tRemainder;
+      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+      // Next Train
+      let nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      let nextTrainConverted = moment(nextTrain).format("hh:mm a");
+
       newDiv = $(`<tr><th scope="row" class="nameData">${newPost.name}</th>
-      <td scope="row" class="trainDestination">${newPost.destination}</td>
-      <td class="trainFrequency">${newPost.frequency}</td>
-      <td class="nextTrain">change to NextArrivalTime</td>
-      <td class="minAway">change to MinutesUntilNextTrain</td></tr>`);
+        <td scope="row" class="trainDestination">${newPost.destination}</td>
+        <td class="trainFrequency">${newPost.frequency}</td>
+        <td class="nextTrain">${nextTrainConverted}</td>
+        <td class="minAway">${tMinutesTillTrain}</td></tr>`);
       $(`.trainPull`).prepend(newDiv);
     });
   }
@@ -79,11 +106,38 @@ $(`#submitButton`).click(function(event) {
     console.log("Previous Post ID: " + prevChildKey);
     console.log(`-- - -- --- -- - --`);
 
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    let firstTrainConverted = moment(newPost.firstTrain, "HH:mm").subtract(
+      1,
+      "years"
+    );
+    console.log(firstTrainConverted);
+
+    // Current Time
+    let currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    // Difference between the times
+    let diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    let tRemainder = diffTime % newPost.frequency;
+    console.log(tRemainder);
+
+    // Minute Until Train
+    let tMinutesTillTrain = newPost.frequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    let nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    let nextTrainConverted = moment(nextTrain).format("hh:mm a");
+
     newDiv = $(`<tr><th scope="row" class="nameData">${newPost.name}</th>
         <td scope="row" class="trainDestination">${newPost.destination}</td>
         <td class="trainFrequency">${newPost.frequency}</td>
-        <td class="nextTrain">change to NextArrivalTime</td>
-        <td class="minAway">change to MinutesUntilNextTrain</td></tr>`);
+        <td class="nextTrain">${nextTrainConverted}</td>
+        <td class="minAway">${tMinutesTillTrain}</td></tr>`);
     $(`.trainPull`).prepend(newDiv);
   });
 });
@@ -99,3 +153,22 @@ function writeTrainSchedule(trainName, destination, firstTrain, frequency) {
       frequency: frequency
     });
 }
+
+// database.ref().once("value", function(snapshot) {
+//   var newPost = snapshot.val();
+//   // Difference between the times
+//   let timeDiff = moment().diff(moment(newPost.firstTrain), "minutes");
+//   console.log("Difference in Time: " + timeDiff);
+
+//   // Time apart (remainder)
+//   let tRemainder = timeDiff % newPost.frequency;
+//   console.log(tRemainder);
+
+//   // Minute Until Train
+//   let minTilTrain = newPost.frequency - tRemainder;
+//   console.log("Minutes until Next Train: " + minTilTrain);
+
+//   // Next Train
+//   let nextTrain = moment().add(minTilTrain, "minutes");
+//   console.log("Next Train: " + moment(nextTrain).format("hh:mm"));
+// });

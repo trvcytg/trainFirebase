@@ -10,6 +10,11 @@ const config = {
 firebase.initializeApp(config);
 const database = firebase.database();
 
+// Pull Current Time on Page Loading
+let currentTime = moment();
+console.log("Time of Page Access " + moment(currentTime).format("hh:mm"));
+
+//Check for information to push to table on Firebase upon page load
 database.ref().once("value", function(snapshot) {
   if (snapshot.exists()) {
     $(`.trainPull`).empty();
